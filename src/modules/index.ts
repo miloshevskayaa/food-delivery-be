@@ -1,5 +1,7 @@
 import { AuthModule } from './auth/auth.module';
-import { ImagesModule } from './images/images.module';
-import { ProductsModule } from './products/products.module';
+import { DishModule } from './dishes/dish.module';
+import { CreateModule } from './registration/create.module';
+import { ResetPasswordModule } from './reset-password/reset-password.module';
+import { UpdateModule } from './update/update.module';
 
-export const APP_MODULES = [ImagesModule, AuthModule, ProductsModule];
+export const APP_MODULES = [DishModule, AuthModule, UpdateModule, CreateModule, ResetPasswordModule];

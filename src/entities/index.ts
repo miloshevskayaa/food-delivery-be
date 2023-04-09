@@ -1,8 +1,11 @@
-import { IMAGE_ENTITIES } from './images';
+import { Category } from './categories';
+import { Dish } from './dish';
 import { Order } from './order';
-import { Product } from './product';
+import { OrderDishes } from './order_dishes';
+import { OneTimePassword } from './otp';
+import { Promocode } from './promocode';
 import { User } from './user';
 
-export const ENTITIES = [...IMAGE_ENTITIES, Product, Order, User];
+export const ENTITIES = [Promocode, User, Dish, Order, OrderDishes, OneTimePassword, Category];
 
 export const SUBSCRIBERS = [];

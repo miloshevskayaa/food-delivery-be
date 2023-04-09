@@ -1,14 +1,16 @@
-import { Body, Controller, Delete, Get, Post, Put, Request } from '@nestjs/common';
+import { Body, Get, Post, Request } from '@nestjs/common';
 
 import { IsAuthenticated } from '@shared/user';
 
+import { AuthController as Controller } from '../decorators';
+import { UserLoginDto } from '../dto';
 import { AuthService } from '../services';
 @Controller()
 export class AuthController {
   constructor(private readonly _authService: AuthService) {}
 
-  @Post('auth/login')
-  async login(@Body() { email, password }: any) {
+  @Post('login')
+  async login(@Body() { email, password }: UserLoginDto) {
     return this._authService.login(email, password);
   }
 
@@ -16,27 +18,5 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req: any) {
     return req.user;
-  }
-
-  @Post('register')
-  async register(@Body() user: any) {
-    console.log(user);
-
-    return this._authService.createUser(user);
-  }
-
-  @Delete('remove')
-  async remove(@Body() user: any) {
-    return this._authService.removeUser(user);
-  }
-
-  @Put('update')
-  async update(@Body() user: any) {
-    return this._authService.updateUser(user);
-  }
-
-  @Get('users')
-  getProducts() {
-    return this._authService.getUsers();
   }
 }

@@ -1,5 +1,6 @@
-import { ImageCartLoader, ImagePreviewLoader } from './images';
-import { ProductLoader } from './products';
+import { CategoryLoader } from './categories';
+import { DishLoader } from './dishes';
+import { PromocodeLoader } from './promocodes';
 import { UserLoader } from './users';
 
-export const DEV_LOADERS = [ImageCartLoader, ProductLoader, ImagePreviewLoader, UserLoader];
+export const DEV_LOADERS = [PromocodeLoader, CategoryLoader, DishLoader, UserLoader];

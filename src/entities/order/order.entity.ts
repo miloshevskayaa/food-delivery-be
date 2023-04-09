@@ -1,14 +1,19 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, ManyToOne, OneToMany } from 'typeorm';
+
+import { OrderDishes } from '@entities/order_dishes';
+import { Promocode } from '@entities/promocode';
+import { User } from '@entities/user';
 
 import { BaseEntity } from '../common';
-import { Product } from '../product';
 
 @Entity('order')
 export class Order extends BaseEntity {
-  @Column({ length: 10, name: 'order_name' })
-  orderName: string;
+  @ManyToOne(() => Promocode, (promocode: Promocode) => promocode.id)
+  promocode: Promocode;
 
-  @ManyToOne(() => Product, (product: Product) => product.id)
-  @JoinColumn()
-  product: Product;
+  @ManyToOne(() => User, (user: User) => user.favorite)
+  user: User;
+
+  @OneToMany(() => OrderDishes, (orderDishes: OrderDishes) => orderDishes.order)
+  orderDishes: OrderDishes[];
 }

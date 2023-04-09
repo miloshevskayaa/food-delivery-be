@@ -1,6 +1,7 @@
 import { User } from '@entities/user';
 import { EnvironmentType } from '@models/enum';
 
+// eslint-disable-next-line no-restricted-imports
 import { AbstractLoader, IRelationsOptions } from '../../../abstract-loader';
 import { USERS_FIXTURES } from '../../data/users';
 
