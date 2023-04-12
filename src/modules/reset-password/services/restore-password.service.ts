@@ -51,6 +51,8 @@ export class RestorePasswordService {
       throw new BadRequestException('Wrong otp');
     }
 
+    this._otpRepository.delete(existingOtp);
+
     return existingOtp;
   }
 

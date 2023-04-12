@@ -1,4 +1,4 @@
-import { Body, Get, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Body, Delete, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 
 import { ResetPasswordController as Controller } from '../decorators';
 import { RestorePasswordDto } from '../dto';
@@ -8,14 +8,14 @@ import { RestorePasswordService } from '../services';
 export class ResetPasswordController {
   constructor(private _restoreService: RestorePasswordService) {}
 
-  @Get('check')
+  @Post('check')
   sendMail(@Body() { email }: any) {
     console.log(email);
 
     return this._restoreService.sendMail(email);
   }
 
-  @Get('otp')
+  @Delete('otp')
   otpCheck(@Body() { email, otp }: RestorePasswordDto) {
     return this._restoreService.otpCheck(email, otp);
   }
