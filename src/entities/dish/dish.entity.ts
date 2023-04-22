@@ -1,9 +1,9 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
 import { Category } from '@entities/categories';
 import { OrderDishes } from '@entities/order_dishes';
-import { User } from '@entities/user';
 
+// import { User } from '@entities/user';
 import { BaseEntity } from '../common';
 
 @Entity('dish')
@@ -56,8 +56,8 @@ export class Dish extends BaseEntity {
   })
   description: string;
 
-  @ManyToMany(() => User, (user: User) => user.favorite)
-  user: User[];
+  // @ManyToMany(() => User, (user: User) => user.favorite)
+  // user: User[];
 
   @OneToMany(() => OrderDishes, (orderDishes: OrderDishes) => orderDishes.dish)
   orderDishes: OrderDishes[];

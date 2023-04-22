@@ -1,17 +1,22 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { join } from 'path';
 
 import { Config } from '@core/config';
 
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const publicPath = join(__dirname, '..', '..', 'public');
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // TODO make and use your own validation pipe
   app
     .useGlobalPipes(new ValidationPipe())
+    .useStaticAssets(publicPath)
     // TODO setup cors for client url (use Config.get.clientURL)
     .enableCors({ origin: '*' });
 

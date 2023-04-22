@@ -1,4 +1,4 @@
-import { Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Get, Query } from '@nestjs/common';
 
 import { DishController as Controller } from '../decorators';
 import { DishService } from '../services';
@@ -7,8 +7,13 @@ import { DishService } from '../services';
 export class DishController {
   constructor(private readonly _dishService: DishService) {}
 
-  @Get(':id')
-  async getDishes(@Param('id', ParseUUIDPipe) categoryId: string) {
+  @Get()
+  async getDishes(@Query() { categoryId }: any) {
     return this._dishService.getDishes(categoryId);
+  }
+
+  @Get('dish')
+  async getDish(@Query() { dishId }: any) {
+    return this._dishService.getDish(dishId);
   }
 }

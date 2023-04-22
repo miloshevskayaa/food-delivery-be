@@ -14,6 +14,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import * as path from 'path';
 
+import { IsAuthenticated } from '@shared/user';
 import { UserEditDto } from '@shared/user/models';
 
 import { UpdateController as Controller } from '../decorators';
@@ -31,12 +32,15 @@ export class UpdateController {
     return this._updateService.updateUser(id, user);
   }
 
-  @Post(':id/upload')
+  @IsAuthenticated()
+  @Post('/upload')
   @UseInterceptors(
-    FileInterceptor('file', {
+    FileInterceptor('image', {
       storage: diskStorage({
         destination: '',
         filename: function (req: any, file: any, cb: any) {
+          console.log('filename', file);
+          // console.log(req);
           const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
           const extention: string = path.parse(file.originalname).ext;
 
@@ -46,7 +50,7 @@ export class UpdateController {
     }),
   )
   async uploadAvatar(
-    @Param('id', ParseUUIDPipe) id: string,
+    // @Param('id', ParseUUIDPipe) id: string,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -58,6 +62,8 @@ export class UpdateController {
     )
     file: Express.Multer.File,
   ) {
+    console.log(file);
+
     return file.filename;
   }
 }

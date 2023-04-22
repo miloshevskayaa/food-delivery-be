@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Migration1681075953868 implements MigrationInterface {
-  name = 'Migration1681075953868';
+export class Migration1681807684888 implements MigrationInterface {
+  name = 'Migration1681807684888';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -23,13 +23,11 @@ export class Migration1681075953868 implements MigrationInterface {
       `CREATE TABLE "category" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, CONSTRAINT "PK_9c4e4a89e3674fc9f382d733f03" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "one_time_password" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "otp" character varying(6) NOT NULL, "userId" uuid, CONSTRAINT "UQ_baad3eb989ae49a5d39f93557f7" UNIQUE ("otp"), CONSTRAINT "REL_47e930d26650fc7fec23300be7" UNIQUE ("userId"), CONSTRAINT "PK_6aa80a21a6822be4a9d8b5c7d5e" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "user_favorite_dishes" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "dishId" uuid, "userId" uuid, CONSTRAINT "PK_24ce7c7803bbaa352c85489f296" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "user_favorite_dish" ("userId" uuid NOT NULL, "dishId" uuid NOT NULL, CONSTRAINT "PK_563e21b361f2641edf1bb26dd09" PRIMARY KEY ("userId", "dishId"))`,
+      `CREATE TABLE "one_time_password" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "otp" character varying(6) NOT NULL, "userId" uuid, CONSTRAINT "UQ_baad3eb989ae49a5d39f93557f7" UNIQUE ("otp"), CONSTRAINT "REL_47e930d26650fc7fec23300be7" UNIQUE ("userId"), CONSTRAINT "PK_6aa80a21a6822be4a9d8b5c7d5e" PRIMARY KEY ("id"))`,
     );
-    await queryRunner.query(`CREATE INDEX "IDX_408fd46183d49ef79ad85bdce7" ON "user_favorite_dish" ("userId") `);
-    await queryRunner.query(`CREATE INDEX "IDX_0292a5c6072816859f042779ee" ON "user_favorite_dish" ("dishId") `);
     await queryRunner.query(
       `ALTER TABLE "order" ADD CONSTRAINT "FK_9ba5c03604e80ed82babd56e503" FOREIGN KEY ("promocodeId") REFERENCES "promocode"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
@@ -46,29 +44,27 @@ export class Migration1681075953868 implements MigrationInterface {
       `ALTER TABLE "dish" ADD CONSTRAINT "FK_f101936095917dde2a9f0609516" FOREIGN KEY ("categoryId") REFERENCES "category"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
+      `ALTER TABLE "user_favorite_dishes" ADD CONSTRAINT "FK_537941613fffc7170c5b1962743" FOREIGN KEY ("dishId") REFERENCES "dish"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "user_favorite_dishes" ADD CONSTRAINT "FK_19f16c7012b173130b700d1c299" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
       `ALTER TABLE "one_time_password" ADD CONSTRAINT "FK_47e930d26650fc7fec23300be71" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "user_favorite_dish" ADD CONSTRAINT "FK_408fd46183d49ef79ad85bdce75" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "user_favorite_dish" ADD CONSTRAINT "FK_0292a5c6072816859f042779eec" FOREIGN KEY ("dishId") REFERENCES "dish"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`ALTER TABLE "user_favorite_dish" DROP CONSTRAINT "FK_0292a5c6072816859f042779eec"`);
-    await queryRunner.query(`ALTER TABLE "user_favorite_dish" DROP CONSTRAINT "FK_408fd46183d49ef79ad85bdce75"`);
     await queryRunner.query(`ALTER TABLE "one_time_password" DROP CONSTRAINT "FK_47e930d26650fc7fec23300be71"`);
+    await queryRunner.query(`ALTER TABLE "user_favorite_dishes" DROP CONSTRAINT "FK_19f16c7012b173130b700d1c299"`);
+    await queryRunner.query(`ALTER TABLE "user_favorite_dishes" DROP CONSTRAINT "FK_537941613fffc7170c5b1962743"`);
     await queryRunner.query(`ALTER TABLE "dish" DROP CONSTRAINT "FK_f101936095917dde2a9f0609516"`);
     await queryRunner.query(`ALTER TABLE "order_dishes" DROP CONSTRAINT "FK_874d4c6a3e239ed569650cc5132"`);
     await queryRunner.query(`ALTER TABLE "order_dishes" DROP CONSTRAINT "FK_3886c8e5aa68a2e5d6b1d1ed233"`);
     await queryRunner.query(`ALTER TABLE "order" DROP CONSTRAINT "FK_caabe91507b3379c7ba73637b84"`);
     await queryRunner.query(`ALTER TABLE "order" DROP CONSTRAINT "FK_9ba5c03604e80ed82babd56e503"`);
-    await queryRunner.query(`DROP INDEX "public"."IDX_0292a5c6072816859f042779ee"`);
-    await queryRunner.query(`DROP INDEX "public"."IDX_408fd46183d49ef79ad85bdce7"`);
-    await queryRunner.query(`DROP TABLE "user_favorite_dish"`);
     await queryRunner.query(`DROP TABLE "one_time_password"`);
+    await queryRunner.query(`DROP TABLE "user_favorite_dishes"`);
     await queryRunner.query(`DROP TABLE "category"`);
     await queryRunner.query(`DROP TABLE "dish"`);
     await queryRunner.query(`DROP TABLE "order_dishes"`);

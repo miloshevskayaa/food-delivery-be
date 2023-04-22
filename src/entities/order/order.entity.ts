@@ -11,7 +11,7 @@ export class Order extends BaseEntity {
   @ManyToOne(() => Promocode, (promocode: Promocode) => promocode.id)
   promocode: Promocode;
 
-  @ManyToOne(() => User, (user: User) => user.favorite)
+  @ManyToOne(() => User, (user: User) => user.order)
   user: User;
 
   @OneToMany(() => OrderDishes, (orderDishes: OrderDishes) => orderDishes.order)

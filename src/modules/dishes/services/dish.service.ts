@@ -12,12 +12,16 @@ export class DishService {
   ) {}
 
   async getDishes(categoryId: string): Promise<any> {
-    const dishes = await this._dishRepository
-      .createQueryBuilder('dish')
-      .leftJoinAndSelect('dish.category', 'category')
-      .where('category.id = :id', { id: categoryId })
-      .getMany();
+    const dishes = await this._dishRepository.createQueryBuilder('dish').leftJoinAndSelect('dish.category', 'category');
 
-    return dishes;
+    categoryId ? dishes.where('category.id = :id', { id: categoryId }) : dishes;
+
+    return dishes.getMany();
+  }
+
+  async getDish(dishId: string): Promise<any> {
+    const dish = await this._dishRepository.createQueryBuilder('dish').where('dish.id = :id', { id: dishId }).getOne();
+
+    return dish;
   }
 }

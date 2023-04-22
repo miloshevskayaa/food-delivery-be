@@ -1,5 +1,8 @@
+import { Config } from '@core/config';
 import { User } from '@entities/user';
 import { Role } from '@models/enum';
+
+import * as bcrypt from 'bcrypt';
 
 export const USERS_FIXTURES: Partial<User>[] = [
   {
@@ -10,7 +13,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'miloshevskaya@mail.ru',
     phoneNumber: '+375296900050',
     address: 'Bratskaya 2',
-    password: 'passDana',
+    password: bcrypt.hashSync('passDana', +Config.get.hashSalt),
     role: Role.User,
   },
   {
@@ -21,7 +24,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'petrakovich@mail.ru',
     phoneNumber: '+375298908767',
     address: 'Lomonosova 5',
-    password: 'passVova',
+    password: bcrypt.hashSync('passVova', +Config.get.hashSalt),
     role: Role.Courier,
   },
   {
@@ -32,7 +35,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'napolov@mail.ru',
     phoneNumber: '+375296707889',
     address: 'Kolesnikova 26',
-    password: 'passVova',
+    password: bcrypt.hashSync('passGrisha', +Config.get.hashSalt),
     role: Role.Courier,
   },
   {
@@ -43,7 +46,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'myshkovskiy@mail.ru',
     phoneNumber: '+375298908660',
     address: 'Lomonosova 5',
-    password: 'passVladik',
+    password: bcrypt.hashSync('passVladik', +Config.get.hashSalt),
     role: Role.Courier,
   },
   {
@@ -54,7 +57,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'zhigimont@mail.ru',
     phoneNumber: '+375296366885',
     address: 'Kizhevatova 3',
-    password: 'passNadya',
+    password: bcrypt.hashSync('passNadya', +Config.get.hashSalt),
     role: Role.Courier,
   },
   {
@@ -65,7 +68,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'krot@mail.ru',
     phoneNumber: '+375299008090',
     address: 'Vostochnaya 38',
-    password: 'passVanya',
+    password: bcrypt.hashSync('passVanya', +Config.get.hashSalt),
     role: Role.Courier,
   },
   {
@@ -76,7 +79,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'filonov@mail.ru',
     phoneNumber: '+375296678940',
     address: 'Avakyana 26',
-    password: 'passAnton',
+    password: bcrypt.hashSync('passAnton', +Config.get.hashSalt),
     role: Role.Courier,
   },
   {
@@ -87,7 +90,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'zuev@mail.ru',
     phoneNumber: '+375293445633',
     address: 'Vostochnaya 38',
-    password: 'passMark',
+    password: bcrypt.hashSync('passMark', +Config.get.hashSalt),
     role: Role.Courier,
   },
   {
@@ -98,7 +101,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'sharikova@mail.ru',
     phoneNumber: '+375296296080',
     address: 'Lomonosova 5',
-    password: 'passKsusha',
+    password: bcrypt.hashSync('passKsusha', +Config.get.hashSalt),
     role: Role.User,
   },
   {
@@ -109,7 +112,7 @@ export const USERS_FIXTURES: Partial<User>[] = [
     email: 'kilyachenko@mail.ru',
     phoneNumber: '+375296670060',
     address: 'Vostochnaya 30',
-    password: 'passDasha',
+    password: bcrypt.hashSync('passDasha', +Config.get.hashSalt),
     role: Role.User,
   },
 ];

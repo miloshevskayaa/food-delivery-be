@@ -28,7 +28,7 @@ export class RestorePasswordService {
 
     await this._mailerService.sendMail({
       to: `${email}`,
-      from: '',
+      from: 'miiloosheevskaayyaa@gmail.com',
       subject: '',
       text: `${otp}`,
       html: '',
