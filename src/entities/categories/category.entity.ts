@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 
 import { Dish } from '@entities/dish';
+import { Favorite } from '@entities/favorites';
 
 import { BaseEntity } from '../common';
 
@@ -14,4 +15,7 @@ export class Category extends BaseEntity {
 
   @OneToMany(() => Dish, (dish: Dish) => dish.category)
   dish: Dish[];
+
+  @OneToMany(() => Favorite, (favorite: Favorite) => favorite.category)
+  favorite: Favorite[];
 }

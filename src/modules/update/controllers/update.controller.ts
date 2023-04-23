@@ -39,9 +39,7 @@ export class UpdateController {
       storage: diskStorage({
         destination: '',
         filename: function (req: any, file: any, cb: any) {
-          console.log('filename', file);
-          // console.log(req);
-          const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+          const filename: string = uuidv4();
           const extention: string = path.parse(file.originalname).ext;
 
           cb(null, `public/images/users/${filename}${extention}`);
@@ -50,7 +48,6 @@ export class UpdateController {
     }),
   )
   async uploadAvatar(
-    // @Param('id', ParseUUIDPipe) id: string,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -64,6 +61,6 @@ export class UpdateController {
   ) {
     console.log(file);
 
-    return file.filename;
+    return { path: file.filename };
   }
 }

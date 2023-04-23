@@ -11,17 +11,17 @@ export class UserDto {
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ example: '' })
+  @ApiProperty({ example: 'Danik' })
   userName: string;
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ example: '' })
+  @ApiProperty({ example: 'images/users/default.jpg' })
   avatar: string;
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ example: '' })
+  @ApiProperty({ example: 'moskaluk@mail.ru' })
   email: string;
 
   @IsNotEmpty()

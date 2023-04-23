@@ -1,6 +1,5 @@
-import { Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
-import { OrderDishes } from '@entities/order_dishes';
 import { Promocode } from '@entities/promocode';
 import { User } from '@entities/user';
 
@@ -11,9 +10,34 @@ export class Order extends BaseEntity {
   @ManyToOne(() => Promocode, (promocode: Promocode) => promocode.id)
   promocode: Promocode;
 
-  @ManyToOne(() => User, (user: User) => user.order)
+  @ManyToOne(() => User, (user: User) => user.orderUser)
   user: User;
 
-  @OneToMany(() => OrderDishes, (orderDishes: OrderDishes) => orderDishes.order)
-  orderDishes: OrderDishes[];
+  @ManyToOne(() => User, (user: User) => user.orderCourier)
+  courier: User;
+
+  @Column({
+    type: 'smallint',
+    name: 'time',
+  })
+  time: number;
+
+  @Column({
+    type: 'timestamp',
+    name: 'deliveryTime',
+  })
+  deliveryTime: Date;
+
+  @Column({
+    type: 'varchar',
+    name: 'address',
+    length: 255,
+  })
+  address: string;
+
+  @Column({
+    type: 'float',
+    name: 'total_price',
+  })
+  totalPrice: number;
 }

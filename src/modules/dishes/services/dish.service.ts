@@ -11,10 +11,12 @@ export class DishService {
     private _dishRepository: Repository<Dish>,
   ) {}
 
-  async getDishes(categoryId: string): Promise<any> {
+  async getDishes(categoryId: string, search: string): Promise<any> {
     const dishes = await this._dishRepository.createQueryBuilder('dish').leftJoinAndSelect('dish.category', 'category');
 
     categoryId ? dishes.where('category.id = :id', { id: categoryId }) : dishes;
+
+    search ? dishes.where('dish.title ilike :search', { search: `%${search}%` }) : dishes;
 
     return dishes.getMany();
   }

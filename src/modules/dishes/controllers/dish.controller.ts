@@ -8,8 +8,8 @@ export class DishController {
   constructor(private readonly _dishService: DishService) {}
 
   @Get()
-  async getDishes(@Query() { categoryId }: any) {
-    return this._dishService.getDishes(categoryId);
+  async getDishes(@Query() { categoryId, search }: any) {
+    return this._dishService.getDishes(categoryId, search);
   }
 
   @Get('dish')

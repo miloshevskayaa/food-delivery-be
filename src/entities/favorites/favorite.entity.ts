@@ -1,5 +1,6 @@
 import { Entity, ManyToOne } from 'typeorm';
 
+import { Category } from '@entities/categories';
 import { Dish } from '@entities/dish';
 import { User } from '@entities/user';
 
@@ -12,4 +13,7 @@ export class Favorite extends BaseEntity {
 
   @ManyToOne(() => User, (user: User) => user.id)
   user: User;
+
+  @ManyToOne(() => Category, (category: Category) => category.favorite)
+  category: Category;
 }

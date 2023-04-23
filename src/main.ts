@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { json } from 'express';
 import { join } from 'path';
 
 import { Config } from '@core/config';
@@ -26,6 +27,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup(url, app, document);
+
+  app.use(json({ limit: '50mb' }));
 
   await app.listen(Config.get.port);
 }

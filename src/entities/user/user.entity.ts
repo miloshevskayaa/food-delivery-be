@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 
-// import { Dish } from '@entities/dish';
 import { Order } from '@entities/order';
 import { Role } from '@models/enum';
 
@@ -56,7 +55,7 @@ export class User extends BaseEntity {
   address: string;
 
   @Column({
-    type: 'json',
+    type: 'varchar',
     name: 'role',
   })
   role: Role;
@@ -69,10 +68,9 @@ export class User extends BaseEntity {
   })
   password: string;
 
-  // @ManyToMany(() => Dish, (dish: Dish) => dish.user)
-  // @JoinTable()
-  // favorite: Dish[];
-
   @OneToMany(() => Order, (order: Order) => order.user)
-  order: Order[];
+  orderUser: Order[];
+
+  @OneToMany(() => Order, (order: Order) => order.courier)
+  orderCourier: Order[];
 }

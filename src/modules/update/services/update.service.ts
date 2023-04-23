@@ -16,8 +16,12 @@ export class UpdateService {
   ) {}
 
   async updateUser(id: string, { password: plainPassword, ...userData }: UserEditDto) {
-    const password = await bcrypt.hash(plainPassword, +Config.get.hashSalt);
+    if (plainPassword) {
+      const password = await bcrypt.hash(plainPassword, +Config.get.hashSalt);
 
-    await this._userRepository.update(id, { ...userData, password });
+      await this._userRepository.update(id, { ...userData, password });
+    } else {
+      await this._userRepository.update(id, { ...userData });
+    }
   }
 }

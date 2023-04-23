@@ -11,9 +11,19 @@ export class CategoryService {
     private _categoryRepository: Repository<Category>,
   ) {}
 
-  async getCategories(): Promise<any> {
+  async getCategories(): Promise<Category[]> {
     const categories = await this._categoryRepository.createQueryBuilder('category').getMany();
 
     return categories;
+  }
+
+  async getCategory(dishId: string): Promise<Category> {
+    const category = await this._categoryRepository
+      .createQueryBuilder('category')
+      .leftJoinAndSelect('category.dish', 'dish')
+      .where('dish.id = :id', { id: dishId })
+      .getOne();
+
+    return category;
   }
 }

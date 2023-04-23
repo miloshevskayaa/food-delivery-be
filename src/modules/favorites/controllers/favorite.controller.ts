@@ -1,4 +1,4 @@
-import { Body, Delete, Get, Post, Request } from '@nestjs/common';
+import { Body, Delete, Get, Post, Query, Request } from '@nestjs/common';
 
 import { IsAuthenticated } from '@shared/user';
 
@@ -11,8 +11,8 @@ export class FavoriteController {
 
   @IsAuthenticated()
   @Get()
-  async getFavorites(@Request() { user }: any) {
-    return this._favoriteService.getFavorites(user.user.id);
+  async getFavorites(@Request() { user }: any, @Query() { categoryId, search }: any) {
+    return this._favoriteService.getFavorites(user.user.id, categoryId, search);
   }
 
   @Post('create')
