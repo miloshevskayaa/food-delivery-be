@@ -55,6 +55,10 @@ export class Config {
     return this._env.HASH_SALT;
   }
 
+  get emailName(): string {
+    return this._env.EMAIL_NAME;
+  }
+
   get emailPass(): string {
     return this._env.EMAIL_PASSWORD;
   }

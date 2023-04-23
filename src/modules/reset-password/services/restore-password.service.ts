@@ -28,7 +28,7 @@ export class RestorePasswordService {
 
     await this._mailerService.sendMail({
       to: `${email}`,
-      from: 'miiloosheevskaayyaa@gmail.com',
+      from: Config.get.emailName,
       subject: '',
       text: `${otp}`,
       html: '',
@@ -56,9 +56,11 @@ export class RestorePasswordService {
     return existingOtp;
   }
 
-  async passwordRestore(id: string, newPassword: string) {
+  async passwordRestore(email: string, newPassword: string) {
+    const user = await this._userService._findOneByEmail(email);
+
     const password = await bcrypt.hash(newPassword, +Config.get.hashSalt);
 
-    await this._userRepository.update(id, { password });
+    await this._userRepository.update(user.id, { password });
   }
 }
