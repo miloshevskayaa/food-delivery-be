@@ -10,7 +10,7 @@ export class OneTimePassword extends BaseEntity {
     type: 'varchar',
     name: 'otp',
     unique: true,
-    length: 6,
+    length: 16,
   })
   otp: string;
 

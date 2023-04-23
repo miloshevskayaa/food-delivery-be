@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 
+import { Config } from '@core/config';
+
 import { RESET_PASSWORD_CONTROLLERS } from './controllers';
 import { RESTORE_PASSWORD_SERVICES } from './services';
 
@@ -12,7 +14,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
         host: 'smtp.gmail.com',
         auth: {
           user: 'miiloosheevskaayyaa@gmail.com',
-          pass: 'dcclxnkrphvbqroq',
+          pass: Config.get.emailPass,
         },
       },
     }),

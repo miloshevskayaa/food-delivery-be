@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Migration1682252141659 implements MigrationInterface {
-  name = 'Migration1682252141659';
+export class Migration1682267184268 implements MigrationInterface {
+  name = 'Migration1682267184268';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -23,7 +23,7 @@ export class Migration1682252141659 implements MigrationInterface {
       `CREATE TABLE "category" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, CONSTRAINT "PK_9c4e4a89e3674fc9f382d733f03" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "one_time_password" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "otp" character varying(6) NOT NULL, "userId" uuid, CONSTRAINT "UQ_baad3eb989ae49a5d39f93557f7" UNIQUE ("otp"), CONSTRAINT "REL_47e930d26650fc7fec23300be7" UNIQUE ("userId"), CONSTRAINT "PK_6aa80a21a6822be4a9d8b5c7d5e" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "one_time_password" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "otp" character varying(16) NOT NULL, "userId" uuid, CONSTRAINT "UQ_baad3eb989ae49a5d39f93557f7" UNIQUE ("otp"), CONSTRAINT "REL_47e930d26650fc7fec23300be7" UNIQUE ("userId"), CONSTRAINT "PK_6aa80a21a6822be4a9d8b5c7d5e" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "dish" ADD CONSTRAINT "FK_f101936095917dde2a9f0609516" FOREIGN KEY ("categoryId") REFERENCES "category"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,

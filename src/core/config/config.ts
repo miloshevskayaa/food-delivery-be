@@ -55,6 +55,10 @@ export class Config {
     return this._env.HASH_SALT;
   }
 
+  get emailPass(): string {
+    return this._env.EMAIL_PASSWORD;
+  }
+
   get keyPem(): string {
     return readFileSync(resolve(__dirname, '../'.repeat(4), 'keys/key.pem'), 'utf-8');
   }

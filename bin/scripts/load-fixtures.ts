@@ -9,11 +9,7 @@ import { DEV_LOADERS } from '@fixtures/dev/loaders';
 import { PROD_LOADERS } from '@fixtures/prod/loaders';
 
 class FixtureLoader {
-  readonly #loaders: ClassType<AbstractLoader<any>>[] = [
-    ...COMMON_LOADERS,
-    ...DEV_LOADERS,
-    ...PROD_LOADERS,
-  ];
+  readonly #loaders: ClassType<AbstractLoader<any>>[] = [...COMMON_LOADERS, ...DEV_LOADERS, ...PROD_LOADERS];
 
   readonly #logger: Logger = new Logger(FixtureLoader.name);
 
@@ -38,9 +34,7 @@ class FixtureLoader {
       console.log(e);
 
       this.#logger.error(
-        `Failed loading fixtures. Error: message - ${
-          e.message
-        }, parameters - ${e.parameters?.join(', ')}.`,
+        `Failed loading fixtures. Error: message - ${e.message}, parameters - ${e.parameters?.join(', ')}.`,
       );
 
       process.exit(1);
