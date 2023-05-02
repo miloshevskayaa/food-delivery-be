@@ -61,6 +61,6 @@ export class UpdateController {
   ) {
     console.log(file);
 
-    return { path: file.filename };
+    return { path: file.filename.replace('public/', '') };
   }
 }
